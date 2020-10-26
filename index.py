@@ -38,7 +38,7 @@ def usuario_repetido(user):
             return False    
              
 
-@app.route('/index')
+@app.route('/')
 def home():
     if 'usuario_logueado' in session:
         return render_template('home1.html', usuario=session['usuario_logueado'])
