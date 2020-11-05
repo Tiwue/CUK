@@ -136,7 +136,7 @@ def campos_vac(nombre,apellido,usuario,contraseña,confirmacion, foto):
 def iniciar():
     return redirect('index')
 
-@app.route('/index')
+@app.route('/index', methods=['GET'])
 def home():
     
     get_recientes()
@@ -255,13 +255,10 @@ def agregarReceta():
         print(str(receta.autor))
     return {"msg": 'Receta agregada'}    
 
-@app.route('/receta/index')    
-def backtohome():
-     return redirect('index')   
 
-@app.route('/receta/<index>')
-def recipe(index):
-    this_receta= search_recipe(index)
+@app.route('/receta/<int:id>')
+def recipe(id):
+    this_receta= search_recipe(id)
     comentarios=this_receta.comentarios
     resumen=str(this_receta.resumen)
     print(this_receta)
@@ -271,6 +268,10 @@ def recipe(index):
 def deslogear():
     if 'usuario_logeado' in session:
         return redirect(url_for('logout'))
+
+@app.route('/receta/inicio')    
+def backtohome():
+    return redirect(url_for('index'))         
 
 @app.route('/postComentario', methods=['POST'])
 def agregarComentario():
