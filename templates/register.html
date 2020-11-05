@@ -62,32 +62,29 @@
           <div class="w3-row w3-section">
             <form class="w3-container" method="POST">
               <p>
-                <input class="w3-input w3-border " id="nombre" type="text" placeholder="Nombre"> 
+                <input class="w3-input" name="nombre" type="text" placeholder="Nombre"></input> 
               </p>
                <p>
-                <input class="w3-input " name="apellido" type="text" placeholder="Apellido">
+                <input class="w3-input " name="apellido" type="text" placeholder="Apellido"></input>
                </p> 
                <p>
-                <input class="w3-input " name="usuario" type="text" placeholder="Nombre de Usuario">
-               </p> 
-               <p>
-                <input class="w3-input " name="foto" type="text" placeholder="Link de fotografia">
-               </p> 
+                <input class="w3-input " name="usuario" type="text" placeholder="Nombre de Usuario"></input>
+               </p>  
                <p>
                 <input class="w3-input" name="contraseña" type="text" placeholder="Contraseña"></input>
                </p> 
                <p>
-                <input class="w3-input " name="confirmacion" type="text" placeholder="Confirmar Contraseña">
+                <input class="w3-input " name="confirmacion" type="text" placeholder="Confirmar Contraseña"></input>
                </p> 
                <p>
-                 <input class="w3-button w3-block w3-section w3-black w3-center w3-text-orange " type="submit" value="Registrar">
+                 <input class="w3-button w3-block w3-section w3-black w3-center w3-text-orange " type="submit" value="Registrar"></input>
                </p>
-               {% if error1 != None %}
+               {% if error != None %}
                <div class="w3-panel w3-red">
                    <h3>¡Error!</h3>
-                   <p>Usuario o Contraseña incorrectos</p>
+                   <p>{{error}}</p>
+                   {%endif%}
                </div>
-               {% endif %}
                </form>
           
 
