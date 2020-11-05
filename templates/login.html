@@ -18,7 +18,8 @@
     h3,
     h4,
     h5,
-    h6 {
+    h6,
+    h7 {
       font-family: "Roboto", sans-serif;
     }
 
@@ -39,7 +40,7 @@
     <div class="w3-bar w3-theme w3-top w3-left-align w3-large">
       <a class="w3-bar-item w3-button w3-right w3-hide-large w3-hover-white w3-large w3-theme-black"
         href="javascript:void(0)" onclick="w3_open()"><i class="fa fa-bars"></i></a>
-      <a href="/index" class="w3-bar-item w3-button w3-theme-l1">CUK</a>
+      <a href = "/index"  class="w3-bar-item w3-button w3-theme-l1">CUK</a>
       <a href="/register" class="w3-bar-item w3-button w3-theme-l1">Registrarse</a>
     </div>
   </div>
@@ -49,20 +50,21 @@
 
     <div class="w3-row w3-padding-64">
       <div class="w3-center w3-container">
-        <div class="w3-center w3-padding-16"><a> <img src="https://i.ibb.co/xLPmkh4/Captura-de-pantalla-177.png" width="300" height="150" alt="Captura-de-pantalla-177" border="0"></a>
-        <p>Mil sabores en un solo lugar</p>
+        
+        <div class="w3-center w3-padding-16"><a> <img src="https://i.ibb.co/xLPmkh4/Captura-de-pantalla-177.png" width="300" height="150" alt="Captura-de-pantalla-177" ></a>
+        <p><h7>Mil sabores en un solo lugar</h7></p>
       </div>
     </div>
    
-    <div class="w3-center w3-container w3-card-4 w3-light-grey w3-text-black w3-margin w3-padding-16" method="POST">
+    <div class="w3-center w3-card-4 w3-grey w3-text-black w3-margin w3-padding-16" method="POST">
       <h2 class="w3-center">Iniciar Sesion</h2>
-      <div class="w3-row w3-section">
+      <div class=" w3-section">
         <form class="w3-container" method="POST">
        <p>
-        <input class="w3-input w3-border" name="usuario" type="text" placeholder="Usuario"> 
+        <input class="w3-input " name="usuario" type="text" placeholder="Usuario"> 
        </p>
         <p>
-          <input class="w3-input w3-border" name="contraseña" type="text" placeholder="Contraseña"></input>
+          <input class="w3-input " name="contraseña" type="text" placeholder="Contraseña"></input>
         </p> 
         <p>
           <input class="w3-button w3-block w3-section w3-black w3-center w3-text-orange " type="submit" value="Iniciar">
@@ -70,7 +72,7 @@
         {% if error != None %}
         <div class="w3-panel w3-red">
             <h3>¡Error!</h3>
-            <p>Usuario o Contraseña incorrectos</p>
+            <p>{{error}}</p>
         </div>
         {% endif %}
         </form>
@@ -103,8 +105,14 @@
       <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>
     </div>
   </footer>
-
-
+  
+  {%if registrado!=None%}
+  <script type="text/javascript">
+   
+    alert("{{registrado}}");
+    
+    </script>
+    {%endif%}
 </body>
 
 </html>
