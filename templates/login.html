@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="en">
 
@@ -115,4 +116,123 @@
     {%endif%}
 </body>
 
+=======
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title>CUK - Inicio de Sesion</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="static/w3.css">
+  <link rel="stylesheet" href="static/w3-theme-black.css">
+  <link rel="stylesheet" href="static/css.css">
+  <link rel="stylesheet" href="static/font-awesome.css">
+  <style>
+    html,
+    body,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    h7 {
+      font-family: "Roboto", sans-serif;
+    }
+
+    .w3-sidebar {
+      z-index: 3;
+      width: 250px;
+      top: 43px;
+      bottom: 0;
+      height: inherit;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Navbar -->
+  <div class="w3-top">
+    <div class="w3-bar w3-theme w3-top w3-left-align w3-large">
+      <a class="w3-bar-item w3-button w3-right w3-hide-large w3-hover-white w3-large w3-theme-black"
+        href="javascript:void(0)" onclick="w3_open()"><i class="fa fa-bars"></i></a>
+      <a href = "/index"  class="w3-bar-item w3-button w3-theme-l1">CUK</a>
+      <a href="/register" class="w3-bar-item w3-button w3-theme-l1">Registrarse</a>
+    </div>
+  </div>
+
+  <!-- Main content: shift it to the right by 250 pixels when the sidebar is visible -->
+  <div class="w3-main" style="margin-inline:250px">
+
+    <div class="w3-row w3-padding-64">
+      <div class="w3-center w3-container">
+        
+        <div class="w3-center w3-padding-16"><a> <img src="https://i.ibb.co/xLPmkh4/Captura-de-pantalla-177.png" width="300" height="150" alt="Captura-de-pantalla-177" ></a>
+        <p><h7>Mil sabores en un solo lugar</h7></p>
+      </div>
+    </div>
+   
+    <div class="w3-center w3-card-4 w3-grey w3-text-black w3-margin w3-padding-16" method="POST">
+      <h2 class="w3-center">Iniciar Sesion</h2>
+      <div class=" w3-section">
+        <form class="w3-container" method="POST">
+       <p>
+        <input class="w3-input " name="usuario" type="text" placeholder="Usuario"> 
+       </p>
+        <p>
+          <input class="w3-input " name="contraseña" type="text" placeholder="Contraseña"></input>
+        </p> 
+        <p>
+          <input class="w3-button w3-block w3-section w3-black w3-center w3-text-orange " type="submit" value="Iniciar">
+        </p>
+        {% if error != None %}
+        <div class="w3-panel w3-red">
+            <h3>¡Error!</h3>
+            <p>{{error}}</p>
+        </div>
+        {% endif %}
+        </form>
+    </div>
+    <div class="w3-row">
+      <div class="w3-center w3-container">
+        <div>
+          <button class="w3-button w3-black" onclick="location.href = 'recuperacion'">Olvide mi contraseña</button>
+          </div>
+          <div class="w3-section"></div>
+          <div>
+            <button class="w3-button w3-black" onclick="location.href = 'register'">¡Crear una Cuenta!</button>
+          </div>
+      </div>
+    </div>
+    
+ </div>
+    <div class="w3-row">
+      <div class="w3-twothird w3-container">
+       
+      </div>
+    </div>
+
+  <footer id="myFooter">
+    <div class="w3-container w3-theme-l2 w3-padding-32">
+      <h4>CUCK 2020 - Todos los derechos reservados</h4>
+    </div>
+
+    <div class="w3-container w3-theme-l1">
+      <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>
+    </div>
+  </footer>
+  
+  {%if registrado!=None%}
+  <script type="text/javascript">
+   
+    alert("{{registrado}}");
+    
+    </script>
+    {%endif%}
+</body>
+
+>>>>>>> master
 </html>
