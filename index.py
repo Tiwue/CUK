@@ -141,6 +141,9 @@ def modificarReceta(indice,receta):
            x.imagen=receta.imagen    
            x.tiempo=receta.tiempo
 
+def eliminarReceta(indice):
+    receta=search_recipe(indice)
+    recetas.remove(receta)
 
 @app.route('/')
 def iniciar():
@@ -401,7 +404,51 @@ def modification(indice):
         receta=search_recipe(indice)
         user=session['usuario_logeado']
         usuario=buscar_user(user)
-        return render_template('modificarReceta.html', usuario=usuario,error=None, receta=receta)    
+        return render_template('modificarReceta.html', usuario=usuario,error=None, receta=receta)   
+
+@app.route('/eliminarReceta',methods=['POST'])        
+def eliminacion():    
+    datos = request.get_json() 
+    eliminarReceta(datos['index_receta']) 
+    return {"msg": 'La receta fue eliminada'}
+
+@app.route('/verComentarios/<indice>',methods=['POST','GET'])        
+def vercoments(indice):    
+    receta=search_recipe(indice)
+    user=session['usuario_logeado']
+    usuario=buscar_user(user)
+    comentarios=receta.comentarios
+    return render_template('verComentarios.html', usuario=usuario, receta=receta, comentarios=comentarios)
+
+@app.route('/verComentarios/regresar')        
+def returnadmon():   
+    return redirect(url_for('admon'))      
+
+@app.route('/addAdmin',methods=['POST'])        
+def addadmin():   
+    datos = request.get_json()
+    campos_llenos=campos_vacios(str(datos['nombre']),str(datos['apellido']),str(datos['usuario']),str(datos['contraseña']),str(datos['confirmacion']))
+    confirmacion = repeticion_pass(str(datos['contraseña']), str(datos['confirmacion']))
+    repetido = usuario_repetido(str(datos['usuario']))
+    estructura= validar_estructura(str(datos['usuario']))
+    if campos_llenos==True:
+            if confirmacion==True: 
+                if estructura==True:
+                    if repetido==False:
+                        agregar_usuario(str(datos['nombre']),str(datos['apellido']),str(datos['usuario']), str(datos['contraseña']),"Administrador", "https://cdn4.vectorstock.com/i/1000x1000/92/93/chef-profile-avatar-icon-vector-10179293.jpg" ) 
+                       
+                        return {"msg": 'Usuario creado con exito'}
+                    
+                    else:
+                       
+                        return {"msg": 'Este Nombre de Usuario ya está en uso. Por favor eliga otro nombre de usuario'}
+                else:
+                   
+                   return {"msg": 'El nombre de usuario debe iniciar con una letra, y puede contener solamente letras y números.'}        
+            else:
+                return {"msg": 'Las contraseñas no coinciden'}
+    else:
+        return {"msg": 'Debe llenar todos los campos'}
 
 if __name__ == '__main__':
     app.run(debug=True)

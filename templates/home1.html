@@ -61,19 +61,18 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Karma", sans-serif}
     <div class="w3-third">
       
     
-    <div class="w3-panel w3-gray w3-hover-opacity" onclick="location.href = 'receta/{{reciente.index}}'" >
+    <div class="w3-panel w3-white w3-hover-opacity" onclick="location.href = 'receta/{{reciente.index}}'" >
     <div class="w3-row w3-padding-16">
       <div class="w3-twothird w3-container"></div>
-      <h1 class="w3-text-white">{{reciente.titulo}}</h1>
+      
       <div class=" w3-center">
-        <img src="{{reciente.imagen}}" alt="{{reciente.imagen}}" width="250" height="125">
+        <img src="{{reciente.imagen}}" alt="{{reciente.imagen}}" width="320" height="200">
       </div>
+      <h1 class="w3-text-black">{{reciente.titulo}}</h1>
       <p>
         {{reciente.resumen}}
       </p>
-      {% if usuario != None %}
-      <button class="w3-button w3-block w3-section w3-teal w3-ripple w3-padding" onclick="location.href = 'receta/{{reciente.index}}'" value="{{reciente.titulo}}">Ver Receta</button>
-      {% endif %}
+      
     </div>
   </div>
 </div>
@@ -83,19 +82,18 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Karma", sans-serif}
  {%if usuario == None %} 
  {% for reciente in recientes %}
  <div class="w3-third">
- <div class="w3-panel w3-gray w3-hover-opacity" onclick="location.href = 'login'" >
+ <div class="w3-panel w3-white w3-hover-opacity" onclick="location.href = 'login'" >
  <div class="w3-row w3-padding-16">
    <div class="w3-twothird w3-container"></div>
-   <h1 class="w3-text-white">{{reciente.titulo}}</h1>
+   
    <div class=" w3-center">
      <img src="{{reciente.imagen}}" alt="{{reciente.imagen}}" width="250" height="125">
    </div>
+   <h1 class="w3-text-black">{{reciente.titulo}}</h1>
    <p>
      {{reciente.resumen}}
    </p>
-   {% if usuario != None %}
-   <button class="w3-button w3-block w3-section w3-teal w3-ripple w3-padding" onclick="location.href = 'login'" value="{{reciente.titulo}}">Ver Receta</button>
-   {% endif %}
+   
  </div>
 </div>
 </div>

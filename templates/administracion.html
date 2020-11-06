@@ -91,14 +91,10 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Karma", sans-serif}
       </div>
       <div  >
         <button class="w3-button w3-card w3-block w3-amber w3-hover-deep-orange w3-padding-32 w3-large"
-        onclick="mostrarCarga()"><b>Cargar Recetas</b></button>
-      </div>
-      <div  >
-        <button class="w3-button w3-card w3-block w3-orange w3-hover-deep-orange w3-padding-32 w3-large"
         onclick="mostrarRegistro()"><b>Registrar Admins</b></button>
       </div>
       <div  >
-        <button class="w3-button w3-card w3-block w3-amber w3-hover-deep-orange w3-padding-32 w3-large"
+        <button class="w3-button w3-card w3-block w3-orange w3-hover-deep-orange w3-padding-32 w3-large"
         onclick="mostrarReacciones()"><b>Reacciones</b></button>
       </div>
   </div>
@@ -106,30 +102,30 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Karma", sans-serif}
 </div>
 
 
-<div class=" w3-padding-32 w3-col s6 w3-white w3-containter " id="contenedor" style="margin-top:100px;display:none;margin-left:200px;">
-    <div class=" w3-white s6 w3-center w3-margin-left" id="usuarios" style="margin-top:10px;margin-bottom:500px;margin-left:700px;">
+<div class=" w3-padding-32 w3-col s6 w3-white w3-containter " id="contenedor" style="margin-top:100px;display:block;margin-left:200px;">
+    <div class=" w3-white s6 w3-center w3-margin-left" id="usuarios" style="display:block;margin-top:10px;margin-bottom:500px;margin-left:700px;">
       <!--tabla de usuarios-->  
-      <div class="w3-container w3-center w3-block">
-      <table class="egt,  w3-xxlarge w3-container w3-block">
+      <div class="w3-container w3-center ">
+      <table class="egt,  w3-xxlarge w3-container ">
         <div class="w3-center w3-text-orange"><caption>Usuarios registrados</caption></div>
         <tr class="w3-card w3-orange w3-round w3-center">
       
-          <th><div class="w3-center w3-margin-left-32">Tipo</div></th>
+          <th><div class="w3-center w3-deep-orange w3-margin-left-32">Tipo</div></th>
       
-          <th><div class="w3-center w3-margin-left-32">Foto</div></th>
+          <th><div class="w3-center w3-deep-orange w3-margin-left-32">Foto</div></th>
       
-          <th><div class="w3-center w3-margin-left-32">Nombre</div></th>
+          <th><div class="w3-center w3-deep-orange w3-margin-left-32">Nombre</div></th>
           
-          <th><div class="w3-center w3-margin-left-32">Apellido</div></th>
+          <th><div class="w3-center w3-deep-orange w3-margin-left-32">Apellido</div></th>
 
-          <th><div class="w3-center w3-margin-left-32">Usuario</div></th>
+          <th><div class="w3-center w3-deep-orange w3-margin-left-32">Usuario</div></th>
 
         </tr>
         {% for usuario in usuarios%}
-      
+        <tbody style="background: lightpink; border: 1px solid rgba(200, 100, 0, 0.3);">
         <tr>
           
-          <td><div class="w3-center w3-padding-32 w3-margin-left-32 w3-margin-rigth">&nbsp;&nbsp;&nbsp;{{usuario.tipo}}&nbsp;&nbsp;&nbsp;</div></td>
+          <td><div class="w3-center w3-padding-16 w3-margin-left-32 w3-margin-rigth">&nbsp;&nbsp;&nbsp;{{usuario.tipo}}&nbsp;&nbsp;&nbsp;</div></td>
       
           <td>&nbsp;&nbsp;&nbsp;<img src="{{usuario.foto}}" alt="foto" class="w3-round-xxlarge w3-card w3-image  w3-margin-left-32 w3-margin-rigth "  width="50" height="50"></img>&nbsp;&nbsp;&nbsp;</td>
       
@@ -140,61 +136,87 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Karma", sans-serif}
           <td>&nbsp;&nbsp;&nbsp;({{usuario.usuario}})&nbsp;&nbsp;&nbsp;</td>
          
         </tr>
-      
+      </tbody>
       {%endfor%}
       
       </table>
     </div>
     </div>
 
-    <div class=" w3-white s8 w3-left-align w3-margin-left w3-margin-rigth" id="rec_pub" style="margin-top:75px;margin-bottom:500px;">
+    <div class=" w3-white s8 w3-left-align w3-margin-left w3-margin-rigth" id="rec_pub" style="display:none;margin-top:75px;margin-bottom:500px;">
             <!--tabla de recetas-->  
       <div class="w3-container w3-center w3-block">
         <table class="egt,  w3-xxlarge w3-container w3-block">
-          <div class="w3-center w3-text-orange"><caption>Recetas Publicadas</caption></div>
-          <tr class="w3-card w3-orange w3-round w3-center">
+          <div class="w3-center w3-text-deep-orange"><caption>Recetas Publicadas</caption></div>
+          <tr class=" w3-center">
         
-            <th><div class="w3-center w3-margin-left-32">Titulo</div></th>
+            <th><div class="w3-center w3-deep-orange w3-round w3-margin-left-32">Titulo</div></th>
         
             
         
-            <th><div class="w3-center w3-margin-left-32">Autor</div></th>
-            <th><div class="w3-center w3-margin-left-32"></div></th>
-            <th><div class="w3-center w3-margin-left-32"></div></th>
-  
+            <th><div class="w3-center  w3-deep-orange w3-round w3-margin-left-32">Autor</div></th>
+            <th><div class="w3-center w3-deep-orange w3-margin-left-32">&nbsp;</div></th>
+            <th><div class="w3-center w3-deep-orange w3-margin-left-32">&nbsp;</div></th>
+            <th><div class="w3-center w3-deep-orange w3-margin-left-32">&nbsp;</div></th>
           </tr>
           {% for receta in recetas%}
-        
+          <tbody style="background: orange; border: 1px solid rgba(200, 100, 0, 0.3);">
           <tr>
             
-            <td><div class="w3-center w3-padding-32 w3-margin-left-32 w3-margin-rigth">&nbsp;&nbsp;&nbsp;{{receta.titulo}}&nbsp;&nbsp;&nbsp;</div></td>
+            <td><div class="w3-center w3-padding-16 w3-margin-left-32 w3-margin-rigth">&nbsp;&nbsp;&nbsp;{{receta.titulo}}&nbsp;&nbsp;&nbsp;</div></td>
         
          
         
-            <td>&nbsp;&nbsp;&nbsp;{{receta.autor}}&nbsp;&nbsp;&nbsp;</td>
+            <td class="w3-ligth-gray">&nbsp;&nbsp;&nbsp;{{receta.autor}}&nbsp;&nbsp;&nbsp;</td>
         
-            <th><button onclick="location.href = 'modificarReceta/{{receta.index}}'" class="w3-button w3-orange w3-text-black w3-center w3-hover-green w3-margin-left-32">Editar</button></th>
-  
-            <th><button onclick="location.href = 'eliminar/{{receta.index}}'" class="w3-button w3-center w3-black w3-text-white w3-hover-red w3-margin-left-32">Eliminar</button></th>
-           
+            <th><button onclick="location.href = 'modificarReceta/{{receta.index}}'" class="w3-medium w3-button w3-orange w3-text-black w3-center w3-hover-green w3-margin-left-32">Editar</button></th>
+            <th><button onclick="location.href = 'verComentarios/{{receta.index}}'" class="w3-medium w3-button w3-orange w3-text-black w3-center w3-hover-green w3-margin-left-32">Ver Comentarios</button></th>
+            <th><button onclick="eliminarReceta()" class="w3-button w3-medium w3-center w3-black w3-text-white w3-hover-red w3-margin-left-32">Eliminar</button>
+              <input class="w3-input" id="indice_receta" type="hidden"  value="{{receta.index}}" > </input>
+            </th>
+            
           </tr>
-        
+        </tbody>
         {%endfor%}
         
         </table>
       </div>
     </div>
-    <div class=" w3-white s8 w3-left-align w3-margin-left w3-margin-rigth" id="carg_recetas" style="margin-top:100px;margin-bottom:1000px;">
-        carga de recetas
+
+    <div class=" w3-white s8 w3-left-align w3-margin-left" id="regis_admin" style="display:none;margin-top:100px;margin-bottom:1000px;">
+              <div class="w3-center w3-container w3-card-4 w3-black w3-text-black  " >
+                  <header class="w3-deep-orange">
+                      <h2>Registrar Administrador</h2>
+                    </header>
+                  <div class=" w3-section">
+                    
+                   <p>
+                    <input class="w3-input " id="admin_nombre" type="text" placeholder="Nombre"></input>
+                   </p>
+                    <p>
+                      <input class="w3-input " id="admin_apellido" type="text" placeholder="Apellido"></input>
+                    </p> 
+                    <p>
+                      <input class="w3-input " id="admin_usuario" type="text" placeholder="Nombre de Usuario"></input> 
+                     </p>
+                     <p>
+                      <input class="w3-input " id="admin_contraseña" type="text" placeholder="Contraseña"></input>
+                     </p>
+                     <p>
+                      <input class="w3-input " id="admin_confirmacion" type="text" placeholder="Confirmar contraseña"></input>
+                     </p>
+                      <button class="w3-button w3-section w3-black w3-hover-green w3-padding"
+                      onclick="crear_admin()">¡Crear!</button>
+                    </p>
+              </div>
+            </div>  
     </div>
-    <div class=" w3-white s8 w3-left-align w3-margin-left" id="regis_admin" style="margin-top:100px;margin-bottom:1000px;">
-        registro admins
-    </div>
-    <div class=" w3-white s8 w3-left-align w3-margin-left" id="reacciones" style="margin-top:100px;margin-bottom:1000px;">
+ 
+    <div class=" w3-white s8 w3-left-align w3-margin-left" id="reacciones" style="display:none;margin-top:100px;margin-bottom:1000px;">
         reacciones
     </div>
 </div>
-  </div>
+ 
 
 
   <!-- Footer -->
@@ -225,7 +247,7 @@ function mostrarUsuarios() {
   document.getElementById("contenedor").style.display = "block";
   document.getElementById("usuarios").style.display = "block";
   document.getElementById("rec_pub").style.display = "none";
-  document.getElementById("carg_recetas").style.display = "none";
+ 
   document.getElementById("regis_admin").style.display = "none";
   document.getElementById("reacciones").style.display = "none";
 }
@@ -235,16 +257,7 @@ function mostrarRecetas() {
   document.getElementById("usuarios").style.display = "none";
   document.getElementById("rec_pub").style.display = "block";
   document.getElementById("carg_recetas").style.display = "none";
-  document.getElementById("regis_admin").style.display = "none";
-  document.getElementById("reacciones").style.display = "none";
-}
-
-function mostrarCarga() {
-  document.getElementById("contenedor").style.display = "block";
-  document.getElementById("usuarios").style.display = "none";
-  document.getElementById("rec_pub").style.display = "none";
-  document.getElementById("carg_recetas").style.display = "block";
-  document.getElementById("regis_admin").style.display = "none";
+  
   document.getElementById("reacciones").style.display = "none";
 }
 
@@ -252,7 +265,7 @@ function mostrarRegistro() {
   document.getElementById("contenedor").style.display = "block";
   document.getElementById("usuarios").style.display = "none";
   document.getElementById("rec_pub").style.display = "none";
-  document.getElementById("carg_recetas").style.display = "none";
+  
   document.getElementById("regis_admin").style.display = "block";
   document.getElementById("reacciones").style.display = "none";
 }
@@ -261,11 +274,73 @@ function mostrarReacciones() {
   document.getElementById("contenedor").style.display = "block";
   document.getElementById("usuarios").style.display = "none";
   document.getElementById("rec_pub").style.display = "none";
-  document.getElementById("carg_recetas").style.display = "none";
+ 
   document.getElementById("regis_admin").style.display = "none";
   document.getElementById("reacciones").style.display = "block";
 }
 
+function eliminarReceta()
+    {
+     let index_receta= document.getElementById('indice_receta').value;
+      
+        
+        console.log(index_receta);
+       
+        let datos = {
+          index_receta:index_receta
+          
+        }
+        
+        let opciones = {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(datos)
+        }
+
+        fetch('/eliminarReceta', opciones).then((res) =>
+        {
+          res.json().then((data) =>
+          {
+            location.reload();
+          });
+        });
+      }
+function crear_admin(){
+  let nombre= document.getElementById('admin_nombre').value;
+  let apellido= document.getElementById('admin_apellido').value;
+  let usuario= document.getElementById('admin_usuario').value;
+  let contraseña= document.getElementById('admin_contraseña').value;
+  let confirmacion= document.getElementById('admin_confirmacion').value;    
+        
+      
+      let datos = {
+        nombre:nombre,
+        apellido:apellido,
+        usuario:usuario,
+        contraseña:contraseña,
+        confirmacion:confirmacion
+      }
+      
+      let opciones = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(datos)
+      }
+
+      fetch('/addAdmin', opciones).then((res) =>
+      {
+        res.json().then((data) =>
+        {
+          location.reload();
+        });
+      });
+
+}
+      
 </script>
 
 </body>
