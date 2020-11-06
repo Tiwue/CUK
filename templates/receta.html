@@ -28,14 +28,16 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Karma", sans-serif}
 <nav class="w3-sidebar w3-bar-block w3-card w3-top w3-xlarge w3-animate-left" style="display:none;z-index:2;width:40%;min-width:300px" id="mySidebar">
   <a href="javascript:void(0)" onclick="w3_close()"
   class="w3-bar-item w3-button">Cerrar</a>
-  <a onclick="location.href='index'" class="w3-bar-item w3-button">Inicio</a>
-  <a href="#recetas" onclick="location.href='recetas'" class="w3-bar-item w3-button">Recetas</a>
-  <a href="#aboutus" onclick="w3_close()" class="w3-bar-item w3-button">Acerca de Nosotros</a>
+  <a onclick="location.href='inicio'" class="w3-bar-item w3-button">Inicio</a>
+  <a href="#recetas" onclick="location.href='allrecipes'" class="w3-bar-item w3-button">Recetas</a>
   {%if tipo== "Administrador" %}
   <a href="#aboutus" onclick="w3_close()" class="w3-bar-item w3-button">Reportes</a>
   {%endif%}
   {%if usuario != None%}
-  <a href="#aboutus" onclick="w3_close()" class="w3-bar-item w3-button">Editar Perfil</a>
+  <a onclick="location.href='perfil'" class="w3-bar-item w3-button">Editar Perfil</a>
+  {%endif%}
+  {%if tipo== "Administrador" %}
+  <a onclick="location.href = 'administracion'" class="w3-bar-item w3-button">Administracion</a>
   {%endif%}
 </nav>
 
@@ -193,6 +195,12 @@ function subirComentario()
       }
 
       }
+
+      function irInicio(){
+    window.location = "http://127.0.0.1:5000/index";
+
+}
+
 </script>
 
 </body>

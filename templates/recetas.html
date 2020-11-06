@@ -18,7 +18,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Karma", sans-serif}
   {%if tipo== "Administrador" %}
   <a onclick="w3_close()" class="w3-bar-item w3-button">Reportes</a>
   {%endif%}
-  <a  onclick="location.href = 'inicio'" class="w3-bar-item w3-button">Inicio</a>
+  <a  onclick="location.href = 'index'" class="w3-bar-item w3-button">Inicio</a>
   {%if usuario != None%}
   <a onclick="location.href = 'perfil'" class="w3-bar-item w3-button">Editar Perfil</a>
   {%endif%}
@@ -29,7 +29,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Karma", sans-serif}
 
 <div class="w3-top">
     <div class="w3-white w3-xlarge" style="max-width:1200px;margin:auto">
-      <div class="w3-button w3-padding-16 w3-left" onclick="w3_open()">☰</div>
+      <div class="w3-button w3-padding-16 w3-left" onclick="w3_open()" >☰</div>
       {% if usuario == None %}
       <div  class="w3-button w3-right w3-padding-16" onclick="location.href = 'login'">Login</div>  
       {% endif %}

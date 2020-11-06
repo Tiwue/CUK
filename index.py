@@ -131,7 +131,17 @@ def campos_vac(nombre,apellido,usuario,contraseña,confirmacion, foto):
         return False
     return True
 
-         
+def modificarReceta(indice,receta):   
+    for x in recetas:
+        if int(x.index)==int(indice):
+           x.titulo=receta.titulo
+           x.resumen=receta.resumen
+           x.ingredientes=receta.ingredientes
+           x.procedimiento=receta.procedimiento
+           x.imagen=receta.imagen    
+           x.tiempo=receta.tiempo
+
+
 @app.route('/')
 def iniciar():
     return redirect('index')
@@ -271,7 +281,19 @@ def deslogear():
 
 @app.route('/receta/inicio')    
 def backtohome():
-    return redirect(url_for('index'))         
+    return redirect(url_for('iniciar'))
+
+@app.route('/receta/allrecipes')    
+def backtorecipes():
+    return redirect(url_for('allrecipes'))    
+
+@app.route('/receta/perfil')    
+def backtoperfil():
+    return redirect(url_for('profile')) 
+
+@app.route('/receta/administracion')    
+def gotoadmon():
+    return redirect(url_for('admon'))       
 
 @app.route('/postComentario', methods=['POST'])
 def agregarComentario():
@@ -362,6 +384,24 @@ def admon():
     user=session['usuario_logeado']
     usuario=buscar_user(user)
     return render_template('administracion.html', usuario=usuario,error=None, usuarios=usuarios, recetas=recetas)
+
+@app.route('/modificarReceta/<indice>', methods=['POST','GET'])
+def modification(indice):
+    
+    if request.method == 'POST':
+
+        this_receta=Receta(indice,str(request.form['autor']),str(request.form['titulo']),str(request.form['resumen']), str(request.form['ingredientes']), str(request.form['procedimiento']), str(request.form['tiempo']),str(request.form['imagen']),str(request.form['tiempo'] ))
+        modificarReceta(indice,this_receta)
+        error="Los datos han sido modificados con exito" 
+        user=session['usuario_logeado']
+        usuario=buscar_user(user)
+        receta=search_recipe(indice)
+        return render_template('modificarReceta.html', error=error, usuario=usuario, receta=receta)  
+    else:
+        receta=search_recipe(indice)
+        user=session['usuario_logeado']
+        usuario=buscar_user(user)
+        return render_template('modificarReceta.html', usuario=usuario,error=None, receta=receta)    
 
 if __name__ == '__main__':
     app.run(debug=True)
