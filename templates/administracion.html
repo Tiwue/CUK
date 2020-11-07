@@ -176,8 +176,8 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Karma", sans-serif}
         
             <th><button onclick="location.href = 'modificarReceta/{{receta.index}}'" class="w3-medium w3-button w3-orange w3-text-black w3-center w3-hover-green w3-margin-left-32">Editar</button></th>
             <th><button onclick="location.href = 'verComentarios/{{receta.index}}'" class="w3-medium w3-button w3-orange w3-text-black w3-center w3-hover-green w3-margin-left-32">Ver Comentarios</button></th>
-            <th><button onclick="eliminarReceta()" class="w3-button w3-medium w3-center w3-black w3-text-white w3-hover-red w3-margin-left-32">Eliminar</button>
-              <input class="w3-input" id="indice_receta" type="hidden"  value="{{receta.index}}" > </input>
+            <th><button onclick="location.href = 'eliminarReceta/{{receta.index}}'" class="w3-button w3-medium w3-center w3-black w3-text-white w3-hover-red w3-margin-left-32">Eliminar</button>
+              
             </th>
             
           </tr>
@@ -284,34 +284,7 @@ function mostrarReacciones() {
   document.getElementById("reacciones").style.display = "block";
 }
 
-function eliminarReceta()
-    {
-     let index_receta= document.getElementById('indice_receta').value;
-      
-        
-        console.log(index_receta);
-       
-        let datos = {
-          index_receta:index_receta
-          
-        }
-        
-        let opciones = {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(datos)
-        }
 
-        fetch('/eliminarReceta', opciones).then((res) =>
-        {
-          res.json().then((data) =>
-          {
-            location.reload();
-          });
-        });
-      }
 function crear_admin(){
   let nombre= document.getElementById('admin_nombre').value;
   let apellido= document.getElementById('admin_apellido').value;
