@@ -4,7 +4,13 @@ from flask import Flask, render_template, url_for, request, make_response, sessi
 from Datos.usuario import Usuario
 from Datos.receta import Receta
 from Datos.comentario import Comentario
+from os import environ
+
 import json
+import base64
+import csv
+import subprocess
+import os
 
 app = Flask(__name__)
 comentarios1=[]
@@ -449,6 +455,20 @@ def addadmin():
                 return {"msg": 'Las contraseñas no coinciden'}
     else:
         return {"msg": 'Debe llenar todos los campos'}
+
+@app.route('/cargarArchivo', methods=['POST'])
+def agregarRecetas():
+    datos = request.get_json()
+    contenido = base64.b64decode(datos['data']).decode('utf-8')
+    filas = contenido.splitlines()
+    reader = csv.reader(filas, delimiter=',')
+    for row in reader:
+        indice= get_index() 
+        comentarios=[]
+        receta = Receta(indice,row[0], row[1], row[2],row[3],row[4],row[5],row[6],comentarios)
+        recetas.append(receta)
+
+    return {"msg": 'Receta agregada'}
 
 if __name__ == '__main__':
     app.run(debug=True)
