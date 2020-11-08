@@ -10,7 +10,7 @@ import base64
 import csv
 import subprocess
 import os
-import busquedas
+
 app = Flask(__name__)
 comentarios1=[]
 comentarios2=[]
