@@ -430,6 +430,7 @@ def vercoments(indice):
 def returnadmon():   
     return redirect(url_for('admon'))      
 
+
 @app.route('/addAdmin',methods=['POST'])        
 def addadmin():   
     datos = request.get_json()
