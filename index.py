@@ -412,11 +412,11 @@ def modification(indice):
         usuario=buscar_user(user)
         return render_template('modificarReceta.html', usuario=usuario,error=None, receta=receta)   
 
-@app.route('/eliminarReceta',methods=['POST'])        
-def eliminacion():    
-    datos = request.get_json() 
-    eliminarReceta(datos['index_receta']) 
-    return {"msg": 'La receta fue eliminada'}
+@app.route('/eliminarReceta/<indice>',methods=['POST','GET'])        
+def eliminacion(indice):    
+    
+    eliminarReceta(indice) 
+    return redirect(url_for('admon'))
 
 @app.route('/verComentarios/<indice>',methods=['POST','GET'])        
 def vercoments(indice):    
