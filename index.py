@@ -34,10 +34,6 @@ def get_recientes():
     recientes.clear()
     for receta in recetas[0:3]:
             recientes.append(receta)
-      
-
-
-
 def campos_vacios(nombre,apellido,usuario,contraseña,confirmacion):
     if nombre=="" or apellido=="" or usuario=="" or contraseña=="" or confirmacion=="":
         return False
