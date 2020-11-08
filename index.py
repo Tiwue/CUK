@@ -1,17 +1,16 @@
 from flask import Flask, render_template, url_for, request, make_response, session, redirect, jsonify, Response
 
-
 from Datos.usuario import Usuario
 from Datos.receta import Receta
 from Datos.comentario import Comentario
 from os import environ
-
+import validaciones
 import json
 import base64
 import csv
 import subprocess
 import os
-
+import busquedas
 app = Flask(__name__)
 comentarios1=[]
 comentarios2=[]
@@ -20,81 +19,33 @@ receta1= Receta(0,"Administrador","Lasaña","¿A quién no le gusta la lasaña? 
 "0.75 l de Leche \n 40 g de Mantequilla\n40 g de Harina\n1 pizca de Nuez moscada molida\nSal","\n1.En una sartén, sofreír en un poco de aceite de oliva la cebolla y la zanahoria peladas y cortadas en dados bien pequeños.\n2.Pelar el tomate y cortarlo en dados pequeños. Añadirlo a la sartén. Salpimentar y dejar unos 20 minutos a fuego medio-bajo, hasta que esté en su punto.\n3.Incorporamos los champiñones laminados y los salteamos con la carne.","1:30","https://th.bing.com/th/id/OIP.rSF_epgUbdjkLMui98fKNAHaE8?w=278&h=185&c=7&o=5&pid=1.7",comentarios1)
 receta2= Receta(1,"Administrador","Ensalada","¿A quién no le gusta la lasaña? Este clásico plato de la cocina italiana hace las delicias de los más pequeños y triunfa entre los no tan pequeños. Es perfecto, además, para preparar en cantidades, congelar y llevar al trabajo o al cole. El relleno puede ser de casi cualquier cosa pero, nosotros, no hemos decantado por la clásica lasaña de carne. Una receta fácil y deliciosa para tomar en familia.",
 "0.75 l de Leche \n 40 g de Mantequilla\n40 g de Harina\n1 pizca de Nuez moscada molida\nSal","1.En una sartén, sofreír en un poco de aceite de oliva la cebolla y la zanahoria peladas y cortadas en dados bien pequeños.\n2.Pelar el tomate y cortarlo en dados pequeños. Añadirlo a la sartén. Salpimentar y dejar unos 20 minutos a fuego medio-bajo, hasta que esté en su punto.\n3.Incorporamos los champiñones laminados y los salteamos con la carne.","1:30","https://th.bing.com/th/id/OIP.chnEAkI4xogn108YLrpDegHaGF?pid=Api&rs=1",comentarios2)
-
 usuarios = [usuario1]
-
-app.secret_key = b'asjdlfajsdf'
-
 recetas = [receta1,receta2]
 recientes=[]
-
 indice=1
+app.secret_key = b'asjdlfajsdf'
 
 def get_recientes():
     recientes.clear()
     for receta in recetas[0:3]:
             recientes.append(receta)
-def campos_vacios(nombre,apellido,usuario,contraseña,confirmacion):
-    if nombre=="" or apellido=="" or usuario=="" or contraseña=="" or confirmacion=="":
-        return False
-    return True
 
-def campo_vacio(usuario):
-    if usuario=="":
-        return False
-    return True
-
-def campos_vaciosLogin(usuario,contraseña):
-    if usuario=="" or contraseña=="":
-        return False
-    return True
-
-def validar_login(user, contrasena):
-    for usuario in usuarios:
-        if usuario.usuario == user and usuario.contrasena == contrasena:
-            return usuario
-    return None
-def repeticion_pass(contrasena, confirmacion):
-    
-    if str(contrasena) == str(confirmacion):
-        return True
-    else:
-        return False
+def validar_login( user, contrasena):
+        for usuario in  usuarios:
+            if usuario.usuario == user and usuario.contrasena == contrasena:
+                return usuario
+        return None  
 
 def agregar_usuario(nombre, apellido, usuario, contraseña, tipo, foto):
     usuarios.append(Usuario(nombre, apellido, usuario, contraseña, tipo, foto))
     for usuario in usuarios:
         print(usuario.usuario)
-
-def usuario_repetido(user):
-    y=False
-    for x in usuarios:
-        if str(user)!=str(x.usuario):
-            y=False
-        else:
-            y=True
-            return y
-    return y        
-              
-def validar_estructura(user):
-    usuario=str(user)
-    if usuario!="":
-        k=usuario[0]
-        y=user.isalnum()
-        x=k.isalpha()
         
-        if x==True and y==True:
-            return True
-        else:
-            return False
-    return False          
-
 def buscar_user(usuario):
     for x in usuarios:
         if str(x.usuario)==str(usuario):
             return x
               
-
 def get_index():
     global indice 
     indice =indice+1
@@ -125,13 +76,7 @@ def modificarUsuario(usuarioViejo,usuario):
            x.usuario=usuario.usuario
            session['usuario_logeado']=usuario.usuario
            x.contrasena=usuario.contrasena
-           
            x.foto=usuario.foto
-
-def campos_vac(nombre,apellido,usuario,contraseña,confirmacion, foto):
-    if nombre=="" or apellido=="" or usuario=="" or contraseña=="" or confirmacion=="" or foto=="":
-        return False
-    return True
 
 def modificarReceta(indice,receta):   
     for x in recetas:
@@ -153,7 +98,6 @@ def iniciar():
 
 @app.route('/index', methods=['GET'])
 def home():
-    
     get_recientes()
     if 'usuario_logeado' in session:
         user=session['usuario_logeado']
@@ -162,24 +106,20 @@ def home():
         return render_template('home1.html', usuario=session['usuario_logeado'], recientes=recientes, tipo=tipo)
     return render_template('home1.html',recientes=recientes, usuario=None, recetas=recetas)
 
-
 @app.route('/register',methods=['POST','GET'])
 def registro():
     error=None
-    
     if request.method=='POST':
-        campos_llenos=campos_vacios(request.form['nombre'],request.form['apellido'],request.form['usuario'],request.form['contraseña'],request.form['confirmacion'])
-        confirmacion = repeticion_pass(request.form['contraseña'], request.form['confirmacion'])
-        repetido = usuario_repetido(request.form['usuario'])
-        estructura= validar_estructura(request.form['usuario'])
+        campos_llenos=validaciones.campos_vacios(request.form['nombre'],request.form['apellido'],request.form['usuario'],request.form['contraseña'],request.form['confirmacion'])
+        confirmacion = validaciones.repeticion_pass(request.form['contraseña'], request.form['confirmacion'])
+        repetido = validaciones.usuario_repetido(request.form['usuario'])
+        estructura= validaciones.validar_estructura(request.form['usuario'])
         if campos_llenos==True:
             if confirmacion==True: 
                 if estructura==True:
                     if repetido==False:
                         agregar_usuario(request.form['nombre'],request.form['apellido'],request.form['usuario'], request.form['contraseña'], "Cliente", "https://cdn4.vectorstock.com/i/1000x1000/92/93/chef-profile-avatar-icon-vector-10179293.jpg" ) 
-                       
                         return redirect("login")  
-                    
                     else:
                         error="Este Nombre de Usuario ya está en uso. Por favor eliga otro nombre de usuario"
                         return render_template('register.html', error=error)
@@ -192,10 +132,7 @@ def registro():
         else:
             error="Debe llenar todos los campos"
             return render_template('register.html', usuario=None, error=error )
-
     return render_template('register.html', usuario=None, error=error, recetas=recetas)
-
-
 
 @app.route('/login', methods=['POST', 'GET'])
 def login():
@@ -204,7 +141,7 @@ def login():
     tipo=None
     
     if request.method == 'POST':
-        campos_llenosLogin=campos_vaciosLogin(request.form['usuario'],request.form['contraseña'])
+        campos_llenosLogin=validaciones.campos_vaciosLogin(request.form['usuario'],request.form['contraseña'])
         if campos_llenosLogin==True:
             usuario = validar_login(request.form['usuario'], request.form['contraseña'])    
             if usuario != None:
@@ -228,7 +165,7 @@ def login():
 @app.route('/recuperacion',methods=['POST', 'GET'])  
 def recuperacion():
     if request.method == 'POST':
-        campo_lleno=campo_vacio(request.form['usuario'])
+        campo_lleno=validaciones.campo_vacio(request.form['usuario'])
         if campo_lleno==True:
             usuario=buscar_user(request.form['usuario'])
             if usuario !=None: 
@@ -246,9 +183,7 @@ def recuperacion():
 @app.route('/logout', methods=['GET'])
 def logout():
     session.pop('usuario_logeado', None)
-    
     return redirect('login')
-
 
 @app.route('/recetas', methods=['GET','POST'])
 def allrecipes():
@@ -307,11 +242,8 @@ def agregarComentario():
         return {"msg": 'Error en contenido'}
     else:
         foto=search_photo(str(datos['autor']))        
-    
         comentario = Comentario(str(datos['autor']),foto,str(datos['mensaje']),str(datos['fecha']))
         agregarComent(datos['id_receta'],comentario)
-        
-        
     return {"msg": 'Comentario agregado'}    
 
 @app.route('/perfil', methods=['POST','GET'])
@@ -319,14 +251,13 @@ def profile():
     repetido=False
     estructura=True
     if request.method == 'POST':
-        campos_llenos=campos_vac(request.form['nombre'],request.form['apellido'],request.form['usuario'],request.form['contraseña'],request.form['confirmacion'],request.form['foto'])
-        confirmacion = repeticion_pass(request.form['contraseña'], request.form['confirmacion'])
+        campos_llenos=validaciones.campos_vac(request.form['nombre'],request.form['apellido'],request.form['usuario'],request.form['contraseña'],request.form['confirmacion'],request.form['foto'])
+        confirmacion = validaciones.repeticion_pass(request.form['contraseña'], request.form['confirmacion'])
         repetido=False
         estructura=True
         if request.form['usuario'] != session['usuario_logeado']:
-            repetido = usuario_repetido(request.form['usuario'])
-            estructura= validar_estructura(request.form['usuario'])
-
+            repetido = validaciones.usuario_repetido(request.form['usuario'])
+            estructura= validaciones.validar_estructura(request.form['usuario'])
         if campos_llenos==True:
             if confirmacion==True: 
                 if estructura==True:
@@ -337,7 +268,6 @@ def profile():
                         user=session['usuario_logeado']
                         usuario=buscar_user(user)
                         return render_template('perfil.html', error=error, usuario=usuario)
-                    
                     else:
                         error="Este Nombre de Usuario ya está en uso. Por favor eliga otro nombre de usuario"
                         user=session['usuario_logeado']
@@ -358,7 +288,6 @@ def profile():
             user=session['usuario_logeado']
             usuario=buscar_user(user)
             return render_template('perfil.html', usuario=usuario, error=error )    
-
     user=session['usuario_logeado']
     usuario=buscar_user(user)
     return render_template('perfil.html', usuario=usuario,error=None)
@@ -366,9 +295,9 @@ def profile():
 @app.route('/modificarPerfil', methods=['POST'])    
 def modificacion():
     datos = request.get_json()  
-    confirm = repeticion_pass(str(datos['contraseña']),str(datos['confirmacion']))
-    repetido = usuario_repetido(str(datos['usuario']))
-    estructura= validar_estructura(str(datos['usuario']))
+    confirm = validaciones.repeticion_pass(str(datos['contraseña']),str(datos['confirmacion']))
+    repetido = validaciones.usuario_repetido(str(datos['usuario']))
+    estructura= validaciones.validar_estructura(str(datos['usuario']))
     if confirm==True: 
         if estructura==True:
             if repetido==False:      
@@ -376,7 +305,6 @@ def modificacion():
                 print(str(datos['nombre'])+str(datos['apellido'])+str(datos['usuario'])+str(datos['contraseña'])+str(datos['tipo'])+str(datos['foto']))
                 modificarUsuario(str(datos['viejo']),usuario)
                 session['usuario_logeado'] = str(datos['usuario'])
-                
             else:
                 return {"msg": 'Este Nombre de Usuario ya está en uso. Por favor eliga otro nombre de usuario'}
         else:
@@ -392,9 +320,7 @@ def admon():
 
 @app.route('/modificarReceta/<indice>', methods=['POST','GET'])
 def modification(indice):
-    
     if request.method == 'POST':
-
         this_receta=Receta(indice,str(request.form['autor']),str(request.form['titulo']),str(request.form['resumen']), str(request.form['ingredientes']), str(request.form['procedimiento']), str(request.form['tiempo']),str(request.form['imagen']),str(request.form['tiempo'] ))
         modificarReceta(indice,this_receta)
         error="Los datos han sido modificados con exito" 
@@ -410,7 +336,6 @@ def modification(indice):
 
 @app.route('/eliminarReceta/<indice>',methods=['POST','GET'])        
 def eliminacion(indice):    
-    
     eliminarReceta(indice) 
     return redirect(url_for('admon'))
 
@@ -426,27 +351,22 @@ def vercoments(indice):
 def returnadmon():   
     return redirect(url_for('admon'))      
 
-
 @app.route('/addAdmin',methods=['POST'])        
 def addadmin():   
     datos = request.get_json()
-    campos_llenos=campos_vacios(str(datos['nombre']),str(datos['apellido']),str(datos['usuario']),str(datos['contraseña']),str(datos['confirmacion']))
-    confirmacion = repeticion_pass(str(datos['contraseña']), str(datos['confirmacion']))
-    repetido = usuario_repetido(str(datos['usuario']))
-    estructura= validar_estructura(str(datos['usuario']))
+    campos_llenos=validaciones.campos_vacios(str(datos['nombre']),str(datos['apellido']),str(datos['usuario']),str(datos['contraseña']),str(datos['confirmacion']))
+    confirmacion = validaciones.repeticion_pass(str(datos['contraseña']), str(datos['confirmacion']))
+    repetido = validaciones.usuario_repetido(str(datos['usuario']))
+    estructura= validaciones.validar_estructura(str(datos['usuario']))
     if campos_llenos==True:
             if confirmacion==True: 
                 if estructura==True:
                     if repetido==False:
                         agregar_usuario(str(datos['nombre']),str(datos['apellido']),str(datos['usuario']), str(datos['contraseña']),"Administrador", "https://cdn4.vectorstock.com/i/1000x1000/92/93/chef-profile-avatar-icon-vector-10179293.jpg" ) 
-                       
                         return {"msg": 'Usuario creado con exito'}
-                    
                     else:
-                       
                         return {"msg": 'Este Nombre de Usuario ya está en uso. Por favor eliga otro nombre de usuario'}
                 else:
-                   
                    return {"msg": 'El nombre de usuario debe iniciar con una letra, y puede contener solamente letras y números.'}        
             else:
                 return {"msg": 'Las contraseñas no coinciden'}
@@ -464,9 +384,8 @@ def agregarRecetas():
         comentarios=[]
         receta = Receta(indice,row[0], row[1], row[2],row[3],row[4],row[5],row[6],comentarios)
         recetas.append(receta)
-
     return {"msg": 'Receta agregada'}
 
 if __name__ == '__main__':
-    app.run(debug=False)
+    app.run(debug=True)
 
