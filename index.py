@@ -339,6 +339,10 @@ def eliminacion(indice):
     eliminarReceta(indice) 
     return redirect(url_for('admon'))
 
+@app.route('/eliminarReceta/administracion')    
+def rettoadmon():
+    return redirect(url_for('admon'))    
+
 @app.route('/verComentarios/<indice>',methods=['POST','GET'])        
 def vercoments(indice):    
     receta=search_recipe(indice)
