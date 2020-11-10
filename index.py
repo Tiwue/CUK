@@ -339,7 +339,7 @@ def eliminacion(indice):
     eliminarReceta(indice) 
     return redirect(url_for('admon'))
 
-@app.route('/eliminarReceta/administracion')    
+@app.route('/modificarReceta/administracion')    
 def rettoadmon():
     return redirect(url_for('admon'))    
 
